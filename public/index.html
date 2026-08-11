@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+    <title>Expense Tracker</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <pre id="err" style="display:none;font:12px monospace;white-space:pre-wrap;padding:16px"></pre>
+    <script>
+      window.addEventListener('error', function (e) {
+        var err = document.getElementById('err');
+        err.style.display = 'block';
+        err.textContent = 'GLOBAL ERROR: ' + e.message + '\n' + e.filename + ':' + e.lineno + ':' + e.colno;
+      });
+      window.addEventListener('unhandledrejection', function (e) {
+        var err = document.getElementById('err');
+        err.style.display = 'block';
+        err.textContent = 'UNHANDLED REJECTION: ' + (e.reason && e.reason.stack ? e.reason.stack : e.reason);
+      });
+    </script>
+    <script src="http://localhost:8081/index.web.bundle?platform=web&dev=true"></script>
+  </body>
+</html>
