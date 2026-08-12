@@ -29,13 +29,11 @@ const config = {
             platform,
           );
         }
-        // Avoid importing the native-only TurboModule spec on web.
-        if (
-          /node_modules[\\/]react-native-safe-area-context[\\/]src[\\/]/.test(
-            context.sourcePath,
-          ) &&
-          /^\.\/specs\/NativeSafeAreaContext/.test(moduleName)
-        ) {
+        // Avoid importing the native-only TurboModule spec on web: it calls
+        // TurboModuleRegistry.get() at module scope, which react-native-web
+        // does not implement. Note: `context.sourcePath` is undefined in this
+        // Metro version, so we key purely on the module specifier.
+        if (moduleName === './specs/NativeSafeAreaContext') {
           return context.resolveRequest(
             context,
             path.join(__dirname, 'web-shims', 'NativeSafeAreaContext.js'),
